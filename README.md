@@ -101,7 +101,7 @@ $ impala_shell.sh
 
 https://hub.docker.com/u/yarivgraf
 
-#### Due to storage issues, Binaries of Apache Impala are missing.
+#### Due to image size of the impala, Binaries of Apache Impala are missing in this repository.
 
 
 
