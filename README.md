@@ -101,7 +101,7 @@ $ impala_shell.sh
 
 https://hub.docker.com/u/yarivgraf
 
-### Due to space issues, The Binaries of Apache Impala are missing. the complete image can be found here:
+### Due to space issues, Binaries of Apache Impala are missing. the complete image can be found here:
 
 https://hub.docker.com/r/yarivgraf/apache-impala-3.4.0
 
