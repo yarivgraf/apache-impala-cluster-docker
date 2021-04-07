@@ -39,7 +39,6 @@ RUN mkdir -p /opt && \
     touch /var/log/cron.log && \
     touch /opt/hadoop/conf/dfs.exclude
 
-ADD https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-latest.jar /opt/hadoop/jars
 COPY hdfs-site.xml core-site.xml mapred-site.xml yarn-site.xml /opt/hadoop/conf/
 
 

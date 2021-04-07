@@ -14,7 +14,6 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     HADOOP_COMMON_HOME=/opt/hadoop \
     HADOOP_HDFS_HOME=/opt/hadoop \
     YARN_HOME=/opt/hadoop \
-    HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/opt/hadoop/jars/gcs-connector-hadoop2-latest.jar:/opt/spark/jars/gcs-connector-hadoop2-latest.jar \
     HADOOP_CONF_DIR_dfs_namenode_name_dir=file:///var/lib/hadoop-hdfs/cache/hdfs/dfs/name 
 
 # JAVA 
@@ -28,7 +27,7 @@ RUN apt-get update && \
 # Install hive
 RUN mkdir -p /opt && \
     cd /opt && \
-    curl https://apache.mivzakim.net/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz | \
+    curl https://downloads.apache.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz | \
     tar -zx apache-hive-3.1.2-bin/ && \
     ln -s apache-hive-3.1.2-bin hive && \
     rm /opt/hive/lib/guava-19.0.jar && \
