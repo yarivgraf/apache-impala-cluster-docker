@@ -97,3 +97,11 @@ $ . /etc/profile.d/globals.sh
 
 $ impala_shell.sh
 
+## All docker images can be found here:
+
+https://hub.docker.com/u/yarivgraf
+
+### Due to storage issues, Binaries of Apache Impala are missing. the complete image can be found here:
+
+https://hub.docker.com/r/yarivgraf/apache-impala-3.4.0
+
