@@ -61,7 +61,9 @@ docker run --net=host --name namenode -v /var/lib/hadoop-hdfs/cache/hdfs/dfs/nam
 docker exec namenode /provision-namenode.sh
 #### METASTORE
 docker run --net=host --name provision -d yarivgraf/apache-metastore-3.1.2:latest /opt/hive/bin/schematool -initSchema -dbType postgres -userName hiveuser -passWord 'mypassword'
+
 docker run --net=host --name metastore --restart always -d yarivgraf/apache-metastore-3.1.2:latest /run-metastore.sh
+
 #### STATESTORED
 docker run --net=host --name statestored -e IP=$ETH0 -v /opt/impala/logs:/opt/impala/logs --restart always -d yarivgraf/apache-impala-3.4.0:latest /entrypoint_statestored.sh
 
