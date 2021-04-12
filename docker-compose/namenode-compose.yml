@@ -1,0 +1,121 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:9.6.2-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - '5432:5432'
+    container_name: postgres
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.2
+    environment:
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_USER: hiveuser
+      POSTGRES_DB: metastore
+
+  zookeeper:
+    depends_on:
+      - postgres
+    image: zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.3
+    restart: always
+
+  namenode:
+    depends_on:
+      - postgres
+    image: yarivgraf/apache-hadoop-3.2.2:latest
+    volumes:
+      - /var/lib/hadoop-hdfs/cache/hdfs/dfs/name:/var/lib/hadoop-hdfs/cache/hdfs/dfs/name
+    restart: always
+    container_name: namenode
+    ports:
+      - "50070:50070"
+      - "8020:8020"  
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.4
+    command: "/run-namenode.sh"
+
+  provision:
+    depends_on:
+      - postgres
+    image: yarivgraf/apache-metastore-3.1.2:latest
+    container_name: provision
+    extra_hosts:
+      - "namenode:10.5.0.2"
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.5
+    command: "/opt/hive/bin/schematool -initSchema -dbType postgres -userName hiveuser -passWord 'mypassword'"
+
+  metastore:
+    depends_on:
+      - namenode
+    image: yarivgraf/apache-metastore-3.1.2:latest
+    restart: always
+    container_name: metastore
+    extra_hosts:
+      - "namenode:10.5.0.2"
+    ports:
+      - "9083:9083"    
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.6
+    command: "/run-metastore.sh"
+
+  statestored:
+    depends_on:
+      - metastore
+    image: yarivgraf/apache-impala-3.4.0:compose
+    restart: always
+    volumes:
+      - "/opt/impala/logs:/opt/impala/logs"
+    container_name: statestored
+    ports:
+      - "24000:24000"
+      - "25010:25010"
+    environment:
+      IP: 0.0.0.0
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.7
+    command: "/entrypoint_statestored.sh"
+
+  catalogd:
+    depends_on:
+      - statestored
+    image: yarivgraf/apache-impala-3.4.0:compose
+    restart: always
+    volumes:
+      - "/opt/impala/logs:/opt/impala/logs"
+    container_name: catalogd
+    ports:
+      - "25020:25020"
+      - "26000:26000"
+    environment:
+      IP: 0.0.0.0
+    networks:
+      namenode-network:
+        ipv4_address: 10.5.0.8
+    command: "/entrypoint_catalogd.sh"
+
+networks:
+      namenode-network:
+        driver: bridge
+        ipam:
+         driver: default
+         config:
+           - subnet: 10.5.0.0/24
+
+volumes:
+  db_data: {}
+
