@@ -91,13 +91,7 @@ You can access the hadoop namenode:  http://namenode_ip:50070
 
 To get impala shell (on datanodes):
 
-docker exec -it impalad bash
-
-After get into bash, run:
-
-$ . /etc/profile.d/globals.sh
-
-$ impala_shell.sh
+docker exec -it impalad impala-shell.sh
 
 ## All docker images can be found here:
 
