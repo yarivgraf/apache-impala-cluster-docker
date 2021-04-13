@@ -52,7 +52,7 @@ apt -y install docker.io
 #### ZOOKEEPER
 docker run --net=host --name zookeeper --restart always -d zookeeper
 #### POSTGRES
-docker run --name postgresql --net=host -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=hiveuser -e POSTGRES_DB=metastore --restart always -v /var/lib/postgresql/data:/var/lib/postgresql/data -d postgres:9.6.2-alpine
+docker run --name postgresql --net=host -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=hiveuser -e POSTGRES_DB=metastore --restart always -v /var/lib/postgresql/data:/var/lib/postgresql/data -d postgres:latest
 
 
 #### NAMENODE
@@ -72,13 +72,13 @@ docker run --net=host --name catalogd -e IP=$ETH0 -v /opt/impala/logs:/opt/impal
  
 
 
-# Run on datanode instances (3):
+# Run on datanode instances (At least 3)
 
 apt update
 
 apt -y install docker.io
 
-
+##### Internal namenode IP
 NAMENODE_IP=`host namenode| gawk  '{ print $4 }'`
 #### DATANODE
 docker run --net=host --name datanode --restart always -v /var/run/hadoop-hdfs:/var/run/hadoop-hdfs -v /data0:/data0 -v /data1:/data1 -v /data2:/data2 -v /data3:/data3 -v /data4:/data4 -d yarivgraf/apache-hadoop-3.2.2:latest /run-datanode.sh
@@ -87,7 +87,7 @@ docker run --net=host --name impalad -e IP=$NAMENODE_IP --restart always -v /var
 
 
 
-You can access the hadoop namenode:  http://namenode_ip:50070
+You can access the hadoop namenode:  http://external_namenode_ip:50070
 
 To get impala shell (on datanodes):
 

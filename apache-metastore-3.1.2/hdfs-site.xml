@@ -57,7 +57,7 @@
 
   <property>
     <name>dfs.block.local-path-access.user</name>
-    <value>hdfs,mapred,yarn,hive,yariv,eyal,efraim,adk2,amnon,nipo</value>
+    <value>hdfs,mapred,yarn,hive</value>
   </property>
 
   <property>
