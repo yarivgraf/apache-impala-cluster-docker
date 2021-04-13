@@ -2,10 +2,14 @@ In order to deploy an Apache Impala, you need these components: Apache Zookeeper
 
 * you can also add Hue. but the hue.ini file should be external and mounted to the docker container. Here is an example:
 
-* docker run --net=host --name hue -v /opt/hue/conf/hue.ini:/usr/share/hue/desktop/conf/hue.ini --restart always -d gethue/hue:latest
+* docker run --net=host --name hue -v ~/hue.ini:/usr/share/hue/desktop/conf/hue.ini --restart always -d gethue/hue:latest
 
 * Hue should be run after all the Impala cluster is set. Hue should run on "namenode" instance.
 
+* The attached hue.ini ( hue/conf/hue.ini), works with Imapala. the conf looks for "worker1" instance (impalad). You can change the hue.ini file to look for another imapald instance name.
+
+* create a "hue" database.
+  $ docker exec postgresql psql -U hiveuser -d metastore -c "create database hue;"
 
 The Apache Impala was compiled from here:
  
@@ -34,12 +38,13 @@ How to run Apache Impala 3.4.0 cluster
 ==============================
 This implementation was tested using Google cloud platform.
 
-Four instances are needed. using Ubuntu Distro. It can be run on Centos as well (mind the pkg installation). Make sure the selinux is disabled and instances/servers are resolved (e.g. a datanode can ping namenode by its name) :
+Four instances are needed. using Ubuntu/Debian Distro. It can be run on Centos as well (mind the pkg installation). Make sure the selinux is disabled and instances/servers are resolved (e.g. a datanode can ping namenode by its name) :
 
 1* namenode should be called “namenode” (because of hadoop xml build-in files). It runs Zookeeper, Postgres, Namenode, Metastore, Statestored and Catalogd (Impala).
 
 3* datanodes with 5 formatted disks (mount on /data0 .. /data4). It runs Datanode and Impalad (Impala server and shell). 
 
+* there is a "systemd" directory. it has data0..4.mount that mount block devices.
 
 # Run on namenode instance:
 

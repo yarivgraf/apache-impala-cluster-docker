@@ -1,0 +1,12 @@
+[Unit]
+Description = data storage for /data1
+
+[Mount]
+What = /dev/sdc
+Where = /data1
+Type = xfs
+Options=rw,noatime
+DirectoryMode=0775
+
+[Install]
+WantedBy = multi-user.target
