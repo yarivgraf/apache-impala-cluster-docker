@@ -8,7 +8,8 @@ In order to deploy an Apache Impala, you need these components: Apache Zookeeper
 
 * The attached hue.ini ( hue/conf/hue.ini), works with Imapala. the conf looks for "worker1" instance (impalad). You can change the hue.ini file to look for another imapald instance name.
 
-* create a "hue" database.
+* create a "hue" database (after running postgresql container).
+
   $ docker exec postgresql psql -U hiveuser -d metastore -c "create database hue;"
 
 The Apache Impala was compiled from here:
