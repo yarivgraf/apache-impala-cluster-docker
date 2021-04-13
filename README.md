@@ -1,17 +1,5 @@
 In order to deploy an Apache Impala, you need these components: Apache Zookeeper, PostgresSQL (or MySQL), Apache Hadoop and Apache Metastore.
 
-* you can also add Hue. but the hue.ini file should be external and mounted to the docker container. Here is an example:
-
-* docker run --net=host --name hue -v ~/hue.ini:/usr/share/hue/desktop/conf/hue.ini --restart always -d gethue/hue:latest
-
-* Hue should be run after all the Impala cluster is set. Hue should run on "namenode" instance.
-
-* The attached hue.ini ( hue/conf/hue.ini), works with Imapala. the conf looks for "worker1" instance (impalad). You can change the hue.ini file to look for another imapald instance name.
-
-* create a "hue" database (after running postgresql container).
-
-  $ docker exec postgresql psql -U hiveuser -d metastore -c "create database hue;"
-
 The Apache Impala was compiled from here:
  
 https://downloads.apache.org/impala/3.4.0/apache-impala-3.4.0.tar.gz
@@ -98,6 +86,23 @@ You can access the hadoop namenode:  http://external_namenode_ip:50070
 To get impala shell (on datanodes):
 
 $ docker exec -it impalad impala-shell.sh
+
+* you can also add Hue. but the hue.ini file should be external and mounted to the docker container. Here is an example:
+
+* Hue should be run after all the Impala cluster is set. Hue should run on "namenode" instance.
+
+* The attached hue.ini ( hue/conf/hue.ini), works with Imapala. the conf looks for "worker1" instance (impalad). You can change the hue.ini file to look for another imapald instance name.
+
+* create a "hue" database (after running postgresql container).
+
+  $ docker exec postgresql psql -U hiveuser -d metastore -c "create database hue;"
+  
+* Run Apache Hue:
+
+  $ docker run --net=host --name hue -v ~/hue.ini:/usr/share/hue/desktop/conf/hue.ini --restart always -d gethue/hue:latest
+  
+* You can access the Hue:  http://external_namenode_ip:8888
+
 
 ## All docker images can be found here:
 
