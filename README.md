@@ -1,4 +1,4 @@
-In order to deploy an Apache Impala, you need these components: Apache Zookeeper, PostgresSQL (or MySQL), Apache Hadoop and Apache Metastore.
+In order to deploy an Apache Impala, you need these components: Apache Zookeeper, PostgresSQL, Apache Hadoop and Apache Metastore.
 
 The Apache Impala was compiled from here:
  
