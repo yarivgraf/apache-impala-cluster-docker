@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+  <property>
+    <name>dfs.namenode.http-address</name>
+    <value>0.0.0.0:50070</value>
+  </property>
+  <property> 
+     <name>dfs.namenode.datanode.registration.ip-hostname-check</name> 
+     <value>false</value> 
+  </property>
+  <property>
+     <name>dfs.namenode.name.dir</name>
+     <value>file:///var/lib/hadoop-hdfs/cache/hdfs/dfs/name</value>
+  </property>
+
+  <property>
+	  <name>dfs.blocksize</name>
+	  <value>67108864</value>
+	  <description>Block size</description>
+  </property>
+
+  <property>
+     <name>dfs.datanode.data.dir</name>
+     <value>file:///data0,file:///data1,file:///data2,file:///data3,file:///data4</value>
+  </property>
+
+  <property>
+    <name>dfs.replication</name>
+    <value>2</value>
+  </property>
+  <property>
+    <name>dfs.permissions.superusergroup</name>
+    <value>hadoop</value>
+  </property>
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
+  </property>
+  <!--
+  <property>
+      <name>dfs.datanode.max.locked.memory</name>
+      <value>1610612736</value>
+  </property>
+-->
+  <property>
+    <name>dfs.hosts.exclude</name>
+    <value>/opt/hadoop/conf/dfs.exclude</value>
+  </property>
+
+  <property>
+    <name>dfs.client.read.shortcircuit</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.block.local-path-access.user</name>
+    <value>hdfs,mapred,yarn,hive</value>
+  </property>
+
+  <property>
+    <name>dfs.domain.socket.path</name>
+    <value>/var/run/hadoop-hdfs/hdfs.socket</value>
+  </property>
+
+  <property>
+    <name>dfs.client.file-block-storage-locations.timeout.millis</name>
+    <value>10000</value>
+  </property>
+  
+  <property>
+    <name>dfs.datanode.hdfs-blocks-metadata.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.max.transfer.threads</name>
+    <value>4096</value>
+  </property>
+<property>
+    <name>dfs.datanode.data.dir.perm</name>
+    <value>777</value>
+    <description>
+      Permissions for the directories on on the local filesystem where the DFS
+      data node store its blocks. The permissions can either be octal or
+      symbolic.
+    </description>
+  </property>
+
+
+  <property>
+    <name>fs.permissions.umask-mode</name>
+    <value>022</value>
+  </property>
+
+</configuration>

@@ -1,0 +1,15 @@
+{
+ 	"disable_remote_exec": false,
+ 	"data_dir": "/data/consul",
+ 	"leave_on_terminate": true,
+ 	"enable_script_checks": true,
+ 	"services": [{
+ 		"checks": [{
+ 			"interval": "10s",
+ 			"script": "curl -s -f http://localhost:25000/inflight_query_ids"
+ 		}],
+ 		"name": "impala2021",
+ 		"port": 80
+ 	}]
+
+ }
