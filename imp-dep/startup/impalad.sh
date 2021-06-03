@@ -8,6 +8,7 @@ apt update
 apt -y install docker.io
 NAMENODE=`curl -s http://metadata.google.internal/computeMetadata/v1/instance/attributes/namenode -H 'Metadata-Flavor: Google'`
 NAMENODE_IP=`host $NAMENODE| awk  '{ print $4 }'`
+cd ~
 git clone https://github.com/yarivgraf/apache-impala-cluster-docker.git
 
 # Format and mount disks
