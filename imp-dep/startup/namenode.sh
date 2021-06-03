@@ -27,7 +27,7 @@ docker exec namenode /provision-namenode.sh
 
 
 #### METASTORE
-cd apache-impala-cluster-docker/imp-dep/apache-metastore-3.1.2
+cd ~/apache-impala-cluster-docker/imp-dep/apache-metastore-3.1.2
 sed -i -- "s/changeme/$ME/g" *
 docker run --net=host --name provision -v ~/apache-impala-cluster-docker/imp-dep/apache-metastore-3.1.2:/opt/hadoop/conf -v ~/apache-impala-cluster-docker/imp-dep/apache-metastore-3.1.2:/opt/hive/conf -d yarivgraf/apache-metastore-3.1.2:latest /opt/hive/bin/schematool -initSchema -dbType postgres -userName hiveuser -passWord 'mypassword'
 
