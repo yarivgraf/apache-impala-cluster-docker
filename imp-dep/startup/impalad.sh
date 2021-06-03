@@ -4,16 +4,14 @@
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
-ETH0=`ip addr show ens4 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
 apt update
 apt -y install docker.io
-ME=`hostname`
 NAMENODE=`curl -s http://metadata.google.internal/computeMetadata/v1/instance/attributes/namenode -H 'Metadata-Flavor: Google'`
 NAMENODE_IP=`host $NAMENODE| gawk  '{ print $4 }'`
 git clone https://github.com/yarivgraf/apache-impala-cluster-docker.git
 
 # Format and mount disks
-cd ~apache-impala-cluster-docker/systemd/
+cd ~/apache-impala-cluster-docker/systemd/
 mv * /etc/systemd/system/
 systemctl enable data0.mount data1.mount data2.mount data3.mount data4.mount
 for i in /dev/sd[b-f]; do mkfs.xfs $i ; done
