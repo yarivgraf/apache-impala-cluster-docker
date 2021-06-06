@@ -8,6 +8,7 @@ apt update
 apt -y install docker.io
 NAMENODE=`curl -s http://metadata.google.internal/computeMetadata/v1/instance/attributes/namenode -H 'Metadata-Flavor: Google'`
 NAMENODE_IP=`host $NAMENODE | gawk '{ print $4 }'`
+ME=`hostname`
 cd ~
 git clone https://github.com/yarivgraf/apache-impala-cluster-docker.git
 
@@ -29,4 +30,6 @@ cd ~/apache-impala-cluster-docker/imp-dep/apache-impala-3.4.0/conf
 sed -i -- "s/changeme/$NAMENODE/g" *
 docker run --net=host --name impalad -v ~/apache-impala-cluster-docker/imp-dep/apache-impala-3.4.0/conf:/opt/impala/conf -e IP=$NAMENODE_IP --restart always -v /var/run/hadoop-hdfs:/var/run/hadoop-hdfs -v /opt/impala/logs:/opt/impala/logs -d yarivgraf/apache-impala-3.4.0:latest /entrypoint_impalad.sh
 
+#### CONSUL
+docker run --net=host --name consul --restart always -v /root/apache-impala-cluster-docker/consul/config.json:/etc/config.json -v /tmp/consul:/consul/data -d consul:1.0.6 agent -config-dir /etc/config.json -advertise $ETH0 -retry-join=172.16.0.101 -retry-join=172.16.0.102 -retry-join=172.16.0.103 -node $ME -datacenter=gce1
 
