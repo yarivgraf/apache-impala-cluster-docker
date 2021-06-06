@@ -41,4 +41,11 @@ docker run --net=host --name statestored  -v ~/apache-impala-cluster-docker/imp-
 #### CATALOGD
 docker run --net=host --name catalogd -v ~/apache-impala-cluster-docker/imp-dep/apache-impala-3.4.0/conf:/opt/impala/conf -e IP=$ETH0 -v /opt/impala/logs:/opt/impala/logs --restart always -d yarivgraf/apache-impala-3.4.0:latest /entrypoint_catalogd.sh
 
+#### HUE
 docker run --net=host --name hue --dns 172.16.0.102 -v ~/apache-impala-cluster-docker/imp-dep/apache-hue/conf/hue.ini:/usr/share/hue/desktop/conf/hue.ini --restart always -d gethue/hue:latest
+
+
+### COLLECTD
+cd ~/apache-impala-cluster-docker/imp-dep/collectd
+sed -i -- "s/changeme/$ME/g" *
+docker run --rm --privileged -d --net=host -v ~/apache-impala-cluster-docker/imp-dep/collectd:/etc/collectd:ro -v /proc:/mnt/proc:ro --name=collectd fr3nd/collectd

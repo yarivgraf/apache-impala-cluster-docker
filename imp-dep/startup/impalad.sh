@@ -32,4 +32,12 @@ docker run --net=host --name impalad -v ~/apache-impala-cluster-docker/imp-dep/a
 
 #### CONSUL
 docker run --net=host --name consul --restart always -v /root/apache-impala-cluster-docker/consul/config.json:/etc/config.json -v /tmp/consul:/consul/data -d consul:1.0.6 agent -config-dir /etc/config.json -advertise $ETH0 -retry-join=172.16.0.101 -retry-join=172.16.0.102 -retry-join=172.16.0.103 -node $ME -datacenter=gce1
+#########  COLLECTD
+
+### COLLECTD
+cd ~/apache-impala-cluster-docker/imp-dep/collectd
+sed -i -- "s/changeme/$ME.c.bamboo-antler-742.internal/g" *
+docker run --rm --privileged -d --net=host -v ~/apache-impala-cluster-docker/imp-dep/collectd:/etc/collectd:ro -v /proc:/mnt/proc:ro --name=collectd fr3nd/collectd
+
+
 
