@@ -41,4 +41,4 @@ docker run --net=host --name statestored  -v ~/apache-impala-cluster-docker/imp-
 #### CATALOGD
 docker run --net=host --name catalogd -v ~/apache-impala-cluster-docker/imp-dep/apache-impala-3.4.0/conf:/opt/impala/conf -e IP=$ETH0 -v /opt/impala/logs:/opt/impala/logs --restart always -d yarivgraf/apache-impala-3.4.0:latest /entrypoint_catalogd.sh
 
-
+docker run --net=host --name hue --dns 172.16.0.102 -v ~/apache-impala-cluster-docker/imp-dep/apache-hue/conf/hue.ini:/usr/share/hue/desktop/conf/hue.ini --restart always -d gethue/hue:latest
