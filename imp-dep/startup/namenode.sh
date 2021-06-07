@@ -48,4 +48,4 @@ docker run --net=host --name hue --dns 172.16.0.102 -v ~/apache-impala-cluster-d
 ### COLLECTD
 cd ~/apache-impala-cluster-docker/imp-dep/collectd
 sed -i -- "s/changeme/$ME.c.bamboo-antler-742.internal/g" *
-docker run --rm --privileged -d --net=host -v ~/apache-impala-cluster-docker/imp-dep/collectd:/etc/collectd:ro -v /proc:/mnt/proc:ro --name=collectd fr3nd/collectd
+docker run --privileged -d --restart always --net=host -v ~/apache-impala-cluster-docker/imp-dep/collectd:/etc/collectd:ro -v /proc:/mnt/proc:ro --name=collectd fr3nd/collectd
