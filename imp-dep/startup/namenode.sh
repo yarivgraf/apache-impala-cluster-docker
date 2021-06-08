@@ -54,5 +54,5 @@ docker run --privileged -d --restart always --net=host -v ~/apache-impala-cluste
 cd ~/apache-impala-cluster-docker/imp-dep/startup
 sed -i -- "s/eth0/$ETH0/g" crontab
 cp -f crontab /etc/crontab
-systemctl crond restart
+systemctl restart cron
 
