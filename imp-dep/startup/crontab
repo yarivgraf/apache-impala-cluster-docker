@@ -1,0 +1,21 @@
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+##############
+## HDFS useage
+*/5 * * * * root ret=`docker run --net=host ravwojdyla/snakebite --name sb -n eth0 -p 8020 df -h| grep hdfs|gawk '{ print $5 }'|cut -d\% -f1`;curl -i -XPOST 'http://172.16.0.42:8086/write?db=collectd' --data-binary "impala,name=df_usage,instance="impala2021",type="used" value=$ret"
+
