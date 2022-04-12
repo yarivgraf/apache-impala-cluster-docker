@@ -1,9 +1,9 @@
-FROM docker-hadoop-3.3.1
+FROM apache-hadoop-3.2.2
 
-ARG HADOOP_VERSION=3.3.1
+ARG HADOOP_VERSION=3.2.2
 # ENV
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
-    HADOOP_VERSION=3.3.1 \
+    HADOOP_VERSION=3.2.2 \
     HIVE_VERSION=4.0.0 \
     PATH=$PATH:/opt/hadoop/bin:/opt/hive/bin \
     CLUSTER_NAME=namenode \

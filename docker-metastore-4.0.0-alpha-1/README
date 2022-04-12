@@ -1,13 +1,5 @@
-# Build a docker image
+# Build a apache image
 
-$ docker build -t docker-metastore-4.0.0 -f Dockerfile .
+$ apache build -t apache-metastore-4.0.0 -f Dockerfile .
 
-# tag and push it to container registry of adk2-mr
-
-$ docker tag docker-metastore-4.0.0:latest us.gcr.io/trans-mind-749/docker-metastore-4.0.0:latest
-
-
-
-$ gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us.gcr.io
-$ docker push us.gcr.io/trans-mind-749/docker-metastore-4.0.0:latest
 
